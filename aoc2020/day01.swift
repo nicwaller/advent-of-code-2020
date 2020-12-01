@@ -18,16 +18,29 @@ func checksum(expenseReport: [Int]) -> Int {
     return -1;
 }
 
+func checksumHard(expenseReport: [Int]) -> Int {
+    for x in expenseReport {
+        for y in expenseReport {
+            for z in expenseReport {
+                if (x + y + z == 2020) {
+                    return x * y * z;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
 func day01() {
     print("Hello, Santa!!")
     day01test();
     do {
-//        let fileURL = Bundle.main.url(forResource: "day01_input", withExtension: "txt")
-//        let puzzleInput = try String(contentsOf: fileURL)
+        // In XCode, configure Product->Scheme to set your working directory containing puzzle_input
         let filePath = FileManager.default.currentDirectoryPath
         let puzzleInput = try String(contentsOfFile: filePath + "/puzzle_input/day01.txt", encoding: String.Encoding.utf8)
         let expenseReport = puzzleInput.split(separator:"\n").map { Int($0)! }
         print(checksum(expenseReport: expenseReport))
+        print(checksumHard(expenseReport: expenseReport))
     } catch {
         print("It broke")
         print(error)
