@@ -43,9 +43,35 @@ public extension String {
 
 }
 
+extension String {
+    subscript (i: Int) -> Character {
+        return self[self.index(self.startIndex, offsetBy: i)]
+    }
+
+    subscript (i: Int) -> String {
+        return String(self[i] as Character)
+    }
+
+    subscript (r: Range<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(startIndex, offsetBy: r.upperBound)
+        return self[start..<end]
+    }
+
+    subscript (r: ClosedRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(startIndex, offsetBy: r.upperBound)
+        return self[start...end]
+    }
+}
+
 func isValidPassword(min: Int, max: Int, char: Character, password: String) -> Bool {
     let occurs = password.map{ $0 == char ? 1 : 0 }.reduce(0, +)
     return (min <= occurs) && (max >= occurs)
+}
+
+func altValidPassword(p1: Int, p2: Int, char: Character, password: String) -> Bool {
+    return (password[p1-1] == char) != (password[p2-1] == char)
 }
 
 func countValidPasswords(lines: [Substring]) -> Int {
@@ -60,7 +86,7 @@ func countValidPasswords(lines: [Substring]) -> Int {
         let max = Int(result[1])!
         let char = Character(result[2])
         let password = result[3]
-        let valid = isValidPassword(min: min, max: max, char: char, password: password)
+        let valid = altValidPassword(p1: min, p2: max, char: char, password: password)
         if (valid) {
             countValid += 1
         }
@@ -90,5 +116,11 @@ func day02test() {
     assert(true == isValidPassword(min: 1, max: 3, char: "a", password: "abcde"))
     assert(false == isValidPassword(min: 1, max: 3, char: "b", password: "cdefg"))
     assert(true == isValidPassword(min: 2, max: 9, char: "c", password: "ccccccccc"))
+    assert(true == altValidPassword(p1: 1, p2: 3, char: "a", password: "abcde"))
+    assert(false == altValidPassword(p1: 1, p2: 3, char: "b", password: "cdefg"))
+    assert(false == altValidPassword(p1: 2, p2: 9, char: "c", password: "ccccccccc"))
+    
     print("Tests passed")
 }
+
+// part 2 answer is NOT 636
