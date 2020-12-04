@@ -9,9 +9,8 @@ import Foundation
 
 typealias Passport = Dictionary<String, String>
 
-let passportRequiredFields: Set = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
-
 func isValidPassport(_ passport:Passport) -> Bool {
+    let passportRequiredFields: Set = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
     let keysPresent = Set(passport.keys).intersection(passportRequiredFields)
     return (keysPresent == passportRequiredFields)
 }
@@ -20,39 +19,35 @@ func isVeryValidPassport(_ passport:Passport) -> Bool {
     if (!isValidPassport(passport)) {
         return false
     }
-    if Int(passport["byr"]!)! < 1920 {
-        return false
-    }
-    if Int(passport["byr"]!)! > 2002 {
-        return false
-    }
-    if Int(passport["iyr"]!)! < 2010 {
-        return false
-    }
-    if Int(passport["iyr"]!)! > 2020 {
-        return false
-    }
-    if Int(passport["eyr"]!)! < 2020 {
-        return false
-    }
-    if Int(passport["eyr"]!)! > 2030 {
-        return false
-    }
-    let hgt = Int(passport["hgt"]!
+
+    guard let birthYear = Int(passport["byr"]!) else { return false }
+    guard let issueYear = Int(passport["iyr"]!) else { return false }
+    guard let expirationYear = Int(passport["eyr"]!) else { return false }
+    guard let height = Int(passport["hgt"]!
                     .components(separatedBy:CharacterSet.decimalDigits.inverted)
-                    .joined())!
+                            .joined()) else { return false }
+    
+    if !(1920 ... 2002 ~= birthYear) {
+        return false
+    }
+    if !(2010 ... 2020 ~= issueYear) {
+        return false
+    }
+    if !(2020 ... 2030 ~= expirationYear) {
+        return false
+    }
     if passport["hgt"]!.hasSuffix("cm") {
-        if (hgt < 150) {
+        if (height < 150) {
             return false
         }
-        if (hgt > 193) {
+        if (height > 193) {
             return false
         }
     } else if passport["hgt"]!.hasSuffix("in") {
-        if (hgt < 59) {
+        if (height < 59) {
             return false
         }
-        if (hgt > 76) {
+        if (height > 76) {
             return false
         }
     } else {
