@@ -87,22 +87,8 @@ func decodePassport(_ text:String) -> Passport {
 }
 
 func splitPassports(_ input:String) -> [Passport] {
-    let lines = input.components(separatedBy: .newlines)
-    var relatedLines: [String] = []
-    var passports: [Passport] = []
-    for line in lines {
-        if line != "" {
-            relatedLines.append(line)
-        } else {
-            passports.append(decodePassport(relatedLines))
-            relatedLines = []
-        }
-    }
-    if relatedLines.count > 0 {
-        passports.append(decodePassport(relatedLines))
-        relatedLines = []
-    }
-    return passports
+    let chunks = input.components(separatedBy: "\n\n")
+    return chunks.map { decodePassport($0) }
 }
 
 func day04() {
