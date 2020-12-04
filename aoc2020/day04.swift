@@ -16,6 +16,71 @@ func isValidPassport(_ passport:Passport) -> Bool {
     return (keysPresent == passportRequiredFields)
 }
 
+func isVeryValidPassport(_ passport:Passport) -> Bool {
+    if (!isValidPassport(passport)) {
+        return false
+    }
+    if Int(passport["byr"]!)! < 1920 {
+        return false
+    }
+    if Int(passport["byr"]!)! > 2002 {
+        return false
+    }
+    if Int(passport["iyr"]!)! < 2010 {
+        return false
+    }
+    if Int(passport["iyr"]!)! > 2020 {
+        return false
+    }
+    if Int(passport["eyr"]!)! < 2020 {
+        return false
+    }
+    if Int(passport["eyr"]!)! > 2030 {
+        return false
+    }
+    let hgt = Int(passport["hgt"]!
+                    .components(separatedBy:CharacterSet.decimalDigits.inverted)
+                    .joined())!
+    if passport["hgt"]!.hasSuffix("cm") {
+        if (hgt < 150) {
+            return false
+        }
+        if (hgt > 193) {
+            return false
+        }
+    } else if passport["hgt"]!.hasSuffix("in") {
+        if (hgt < 59) {
+            return false
+        }
+        if (hgt > 76) {
+            return false
+        }
+    } else {
+        print("weird hgt value = \(passport["hgt"]!)")
+        return false
+    }
+
+    let hclRegex = try! NSRegularExpression(pattern: "^#[a-z0-9]{6}$")
+    let hclRange = NSRange(location: 0, length: passport["hcl"]!.utf16.count)
+    if hclRegex.firstMatch(in: passport["hcl"]!, options: [], range: hclRange) == nil {
+        return false
+    }
+
+    let validEyeColours: Set = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+    if !validEyeColours.contains(passport["ecl"]!) {
+        return false
+    }
+    
+    let pidRegex = try! NSRegularExpression(pattern: "^[0-9]{9}$")
+    let pidRange = NSRange(location: 0, length: passport["pid"]!.utf16.count)
+    if pidRegex.firstMatch(in: passport["pid"]!, options: [], range: pidRange) == nil {
+        return false
+    }
+
+    return true
+}
+
+
 func decodePassport(_ lines:[String]) -> Passport {
     var passport: Passport = Dictionary()
     for line in lines {
@@ -56,7 +121,11 @@ func day04() {
     day04test()
     let validPassports = splitPassports(day4puzzleInput).map { isValidPassport($0) ? 1 : 0 }.reduce(0, +)
     assert(254 == validPassports)
-    print(validPassports)
+    let veryValidPassports = splitPassports(day4puzzleInput).map { isVeryValidPassport($0) ? 1 : 0 }.reduce(0, +)
+    assert(veryValidPassports < 187)
+    assert(veryValidPassports < 185)
+    assert(veryValidPassports == 184)
+    print("veryValidPassports \(veryValidPassports)")
 }
 
 func day04test() {
@@ -77,6 +146,43 @@ hgt:179cm
     assert(false == isValidPassport(decodePassport("""
 hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in
+""")))
+
+    assert(false == isVeryValidPassport(decodePassport("""
+eyr:1972 cid:100
+hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926
+""")))
+    assert(false == isVeryValidPassport(decodePassport("""
+iyr:2019
+hcl:#602927 eyr:1967 hgt:170cm
+ecl:grn pid:012533040 byr:1946
+""")))
+    assert(false == isVeryValidPassport(decodePassport("""
+hcl:dab227 iyr:2012
+ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277
+""")))
+    assert(false == isVeryValidPassport(decodePassport("""
+hgt:59cm ecl:zzz
+eyr:2038 hcl:74454a iyr:2023
+pid:3556412378 byr:2007
+""")))
+    
+    assert(true == isVeryValidPassport(decodePassport("""
+pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
+hcl:#623a2f
+""")))
+    assert(true == isVeryValidPassport(decodePassport("""
+eyr:2029 ecl:blu cid:129 byr:1989
+iyr:2014 pid:896056539 hcl:#a97842 hgt:165cm
+""")))
+    assert(true == isVeryValidPassport(decodePassport("""
+hcl:#888785
+hgt:164cm byr:2001 iyr:2015 cid:88
+pid:545766238 ecl:hzl
+eyr:2022
+""")))
+    assert(true == isVeryValidPassport(decodePassport("""
+iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 """)))
 
 }
