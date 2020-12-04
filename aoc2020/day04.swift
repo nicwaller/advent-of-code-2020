@@ -27,13 +27,12 @@ func isVeryValidPassport(_ passport:Passport) -> Bool {
                     .components(separatedBy:CharacterSet.decimalDigits.inverted)
                             .joined()) else { return false }
     
-    if !(1920 ... 2002 ~= birthYear) {
-        return false
-    }
-    if !(2010 ... 2020 ~= issueYear) {
-        return false
-    }
-    if !(2020 ... 2030 ~= expirationYear) {
+    if !(1920 ... 2002 ~= birthYear) ||
+        !(2010 ... 2020 ~= issueYear) ||
+        !(2020 ... 2030 ~= expirationYear) ||
+        !(passport["hcl"]! ~= "^#[a-z0-9]{6}$") ||
+        !(passport["pid"]! ~= "^[0-9]{9}$") ||
+        !["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(passport["ecl"]!) {
         return false
     }
     if passport["hgt"]!.hasSuffix("cm") {
@@ -52,16 +51,6 @@ func isVeryValidPassport(_ passport:Passport) -> Bool {
         }
     } else {
         print("weird hgt value = \(passport["hgt"]!)")
-        return false
-    }
-
-    if !(passport["hcl"]! ~= "^#[a-z0-9]{6}$") {
-        return false
-    }
-    if !["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(passport["ecl"]!) {
-        return false
-    }
-    if !(passport["pid"]! ~= "^[0-9]{9}$") {
         return false
     }
 
