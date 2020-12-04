@@ -55,20 +55,13 @@ func isVeryValidPassport(_ passport:Passport) -> Bool {
         return false
     }
 
-    let hclRegex = try! NSRegularExpression(pattern: "^#[a-z0-9]{6}$")
-    let hclRange = NSRange(location: 0, length: passport["hcl"]!.utf16.count)
-    if hclRegex.firstMatch(in: passport["hcl"]!, options: [], range: hclRange) == nil {
+    if !(passport["hcl"]! ~= "^#[a-z0-9]{6}$") {
         return false
     }
-
-    let validEyeColours: Set = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-    if !validEyeColours.contains(passport["ecl"]!) {
+    if !["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(passport["ecl"]!) {
         return false
     }
-    
-    let pidRegex = try! NSRegularExpression(pattern: "^[0-9]{9}$")
-    let pidRange = NSRange(location: 0, length: passport["pid"]!.utf16.count)
-    if pidRegex.firstMatch(in: passport["pid"]!, options: [], range: pidRange) == nil {
+    if !(passport["pid"]! ~= "^[0-9]{9}$") {
         return false
     }
 
@@ -180,4 +173,12 @@ eyr:2022
 iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 """)))
 
+}
+
+extension String {
+    static func ~= (lhs: String, rhs: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: rhs) else { return false }
+        let range = NSRange(location: 0, length: lhs.utf16.count)
+        return regex.firstMatch(in: lhs, options: [], range: range) != nil
+    }
 }
