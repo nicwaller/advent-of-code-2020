@@ -69,9 +69,9 @@ func isVeryValidPassport(_ passport:Passport) -> Bool {
 }
 
 
-func decodePassport(_ lines:[String]) -> Passport {
+func decodePassport(_ text:String) -> Passport {
     var passport: Passport = Dictionary()
-    for line in lines {
+    for line in text.components(separatedBy: .newlines) {
         for field in line.components(separatedBy: " ") {
             let foo = field.components(separatedBy: ":")
             let key = foo[0]
@@ -80,10 +80,6 @@ func decodePassport(_ lines:[String]) -> Passport {
         }
     }
     return passport
-}
-
-func decodePassport(_ text:String) -> Passport {
-    return decodePassport(text.components(separatedBy: .newlines))
 }
 
 func splitPassports(_ input:String) -> [Passport] {
