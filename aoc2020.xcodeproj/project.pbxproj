@@ -12,6 +12,8 @@
 		C47AEF8A2578AA66009D6695 /* day03.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AEF892578AA66009D6695 /* day03.swift */; };
 		C47AEF8D257A01BF009D6695 /* day04input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AEF8C257A01BF009D6695 /* day04input.swift */; };
 		C47AEF90257A02A5009D6695 /* day04.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AEF8F257A02A5009D6695 /* day04.swift */; };
+		C4B7C46E257B4964009B506B /* day05.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B7C46D257B4964009B506B /* day05.swift */; };
+		C4B7C471257B4969009B506B /* day05input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B7C470257B4969009B506B /* day05input.swift */; };
 		C4B8CBC32577589E00D0CAE3 /* day02.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B8CBC22577589D00D0CAE3 /* day02.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +36,8 @@
 		C47AEF892578AA66009D6695 /* day03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day03.swift; sourceTree = "<group>"; };
 		C47AEF8C257A01BF009D6695 /* day04input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day04input.swift; sourceTree = "<group>"; };
 		C47AEF8F257A02A5009D6695 /* day04.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day04.swift; sourceTree = "<group>"; };
+		C4B7C46D257B4964009B506B /* day05.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day05.swift; sourceTree = "<group>"; };
+		C4B7C470257B4969009B506B /* day05input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day05input.swift; sourceTree = "<group>"; };
 		C4B8CBC22577589D00D0CAE3 /* day02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day02.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,6 +77,8 @@
 				C47AEF892578AA66009D6695 /* day03.swift */,
 				C47AEF8C257A01BF009D6695 /* day04input.swift */,
 				C47AEF8F257A02A5009D6695 /* day04.swift */,
+				C4B7C46D257B4964009B506B /* day05.swift */,
+				C4B7C470257B4969009B506B /* day05input.swift */,
 			);
 			path = aoc2020;
 			sourceTree = "<group>";
@@ -139,6 +145,8 @@
 				C47AEF90257A02A5009D6695 /* day04.swift in Sources */,
 				C4B8CBC32577589E00D0CAE3 /* day02.swift in Sources */,
 				C47AEF8D257A01BF009D6695 /* day04input.swift in Sources */,
+				C4B7C46E257B4964009B506B /* day05.swift in Sources */,
+				C4B7C471257B4969009B506B /* day05input.swift in Sources */,
 				C47AEF8A2578AA66009D6695 /* day03.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
