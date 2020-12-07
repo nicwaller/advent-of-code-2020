@@ -7,122 +7,79 @@
 
 import Foundation
 
-struct BagRule {
-    var node: BagColour;
-    var edges: Dictionary<BagColour, Int> = [:];
-}
-
-typealias Ruleset = Dictionary<BagColour, BagRule>
-
-typealias BagColour = String
-
-func parseBagRule(_ text: String) -> BagRule {
+func parseBagRule(_ text: String) -> (String, [Edge<String>]) {
     let parts = text.delete(["bags", "bag", "."]).splitOn("contain")
     let (node, children) = (parts[0], parts[1].splitOn(","))
     if (children.count == 1 && children.first == "no other") {
-        return BagRule(node: node)
+        return (node, [])
     } else {
-        var rule = BagRule(node: node, edges: [:])
-        for child in children {
-            let (count, colour) = child.take(1)
-            rule.edges[colour.trim()] = Int(count)
-        }
-        return rule
+        return (node, children
+                    .map({ $0.take(1) })
+                    .map({ Edge(from: node, to: $0.1.trim(), weight: Int($0.0)! ) }))
     }
 }
 
-var invertedIndex: Dictionary<BagColour, Set<BagColour>> = [:]
-
-func bagsThatCanDeepContain(colour: BagColour, visited: inout Set<BagColour>) -> Set<BagColour> {
-    if (visited.contains(colour)) {
-        return Set();
+func parseLuggageRulesToGraph(input: String) -> Graph<String> {
+    var G: Graph<String> = Graph()
+    for ruleText in input.splitOn(.newlines) {
+        let (node, edges) = parseBagRule(ruleText)
+        G.node(node)
+        edges.forEach({ G.edge($0) })
     }
-
-    guard let parents: Set<BagColour> = invertedIndex[colour] else {
-        return Set()
-    }
-    let result = parents
-        .map{ bagsThatCanDeepContain(colour: $0, visited: &visited) }
-        .reduce(parents) { $0.union($1) }
-    visited.insert(colour)
-    return result;
+    return G;
 }
 
-var ruleDict: Ruleset = [:]
-
-func containedBags(colour: BagColour) -> Int {
-    if (ruleDict[colour]?.edges.count == 0) {
-        return 0;
-    } else {
-        let inner = ruleDict[colour]!
-        let innerCounts = inner.edges.map{ (1 + containedBags(colour: $0)) * $1 }
-        return innerCounts.reduce(0, +)
+func countInnerBags(origin: String, graph: Graph<String>) -> Int {
+    guard let forwardEdges = graph.edges[origin] else {
+        return 0
     }
+    var inner = 0;
+    for edge in forwardEdges {
+        inner += edge.weight + edge.weight * countInnerBags(origin: edge.to, graph: graph)
+    }
+    return inner;
 }
 
 func day07() {
     day07test()
-    
-    for ruleStr in day7puzzleInput.components(separatedBy: .newlines) {
-        let rule = parseBagRule(ruleStr)
-        for c in rule.edges.keys {
-            if (!invertedIndex.keys.contains(c)) {
-                invertedIndex[c] = Set()
-            }
-            invertedIndex[c]?.insert(rule.node)
-        }
-        ruleDict[rule.node] = rule
-        if rule.edges.keys.count == 0 {
-            print(rule)
-        }
-    }
+        
+    let G = parseLuggageRulesToGraph(input: day7puzzleInput)
     let myBagColour = "shiny gold"
-    var visited: Set<BagColour> = Set()
-    let deepParents = bagsThatCanDeepContain(colour: myBagColour, visited: &visited)
-    assert(248 == deepParents.count)
-    print(deepParents.count)
 
-    let deepChildren = containedBags(colour: myBagColour)
-    assert(57281 == deepChildren)
-    print(deepChildren)
+    let countAncestors = G.ancestors(origin: myBagColour).count
+    assert(248 == countAncestors)
+    print("Ancestors: \(countAncestors)")
+
+    let innerBags = countInnerBags(origin: myBagColour, graph: G)
+    assert(57281 == innerBags)
+    print("Inner Bags: \(innerBags)")
 }
 
 func day07test() {
-    assert("foo".trim("o") == "f")
-    assert(true == true)
-}
-
-public extension String {
-    func trim() -> String {
-        return self.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    func trim(_ chars: CharacterSet) -> String {
-        return self.trimmingCharacters(in: chars)
-    }
-    func trim(_ chars: String) -> String {
-        return self.trimmingCharacters(in: CharacterSet(charactersIn: chars))
-    }
-    func replace(_ needle: String, _ replacement: String) -> String {
-        return self.replacingOccurrences(of: needle, with: replacement)
-    }
-    func splitOn(_ delimiter: String, trimWhitespace: Bool = true) -> [String] {
-        if trimWhitespace {
-            return self.components(separatedBy: delimiter).map{ $0.trim(.whitespaces) }
-        } else {
-            return self.components(separatedBy: delimiter)
-        }
-    }
-    func delete(_ phrases: [String]) -> String {
-        var converted = String(self)
-        for needle in phrases {
-            converted = converted.replace(needle, "")
-        }
-        return converted
-    }
-    func take(_ count: Int) -> (String, String) {
-        let splitIndex: String.Index = self.index(self.startIndex, offsetBy: count)
-        let taken = String(self[..<splitIndex])
-        let remainder = String(self[splitIndex...])
-        return (taken, remainder)
-    }
+    testStringExtensions()
+    testGraph()
+    
+    let G1 = parseLuggageRulesToGraph(input: """
+light red bags contain 1 bright white bag, 2 muted yellow bags.
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+bright white bags contain 1 shiny gold bag.
+muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+faded blue bags contain no other bags.
+dotted black bags contain no other bags.
+""")
+    assert(4 == G1.ancestors(origin: "shiny gold").count)
+    
+    let G2 = parseLuggageRulesToGraph(input: """
+shiny gold bags contain 2 dark red bags.
+dark red bags contain 2 dark orange bags.
+dark orange bags contain 2 dark yellow bags.
+dark yellow bags contain 2 dark green bags.
+dark green bags contain 2 dark blue bags.
+dark blue bags contain 2 dark violet bags.
+dark violet bags contain no other bags.
+""")
+    assert(126 == countInnerBags(origin: "shiny gold", graph: G2))
 }
