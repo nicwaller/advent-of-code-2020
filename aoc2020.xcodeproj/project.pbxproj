@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C40AA371257F3F4000E3109D /* day08.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40AA370257F3F4000E3109D /* day08.swift */; };
+		C40AA374257F3F4700E3109D /* day08input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40AA373257F3F4700E3109D /* day08input.swift */; };
+		C40AA378257F4DAA00E3109D /* BitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40AA377257F4DAA00E3109D /* BitSet.swift */; };
 		C42B5318257DEDDF0023D120 /* day07input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B5317257DEDDF0023D120 /* day07input.swift */; };
 		C42B531B257DEDE60023D120 /* day07.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B531A257DEDE60023D120 /* day07.swift */; };
 		C42B5320257EA85F0023D120 /* string.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42B531F257EA85E0023D120 /* string.swift */; };
@@ -36,6 +39,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C40AA370257F3F4000E3109D /* day08.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day08.swift; sourceTree = "<group>"; };
+		C40AA373257F3F4700E3109D /* day08input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day08input.swift; sourceTree = "<group>"; };
+		C40AA377257F4DAA00E3109D /* BitSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitSet.swift; sourceTree = "<group>"; };
 		C42B5317257DEDDF0023D120 /* day07input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day07input.swift; sourceTree = "<group>"; };
 		C42B531A257DEDE60023D120 /* day07.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day07.swift; sourceTree = "<group>"; };
 		C42B531F257EA85E0023D120 /* string.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = string.swift; sourceTree = "<group>"; };
@@ -83,6 +89,9 @@
 		C46F900B25762D4300DE7793 /* aoc2020 */ = {
 			isa = PBXGroup;
 			children = (
+				C42B531F257EA85E0023D120 /* string.swift */,
+				C42B5322257EA8790023D120 /* graph.swift */,
+				C40AA377257F4DAA00E3109D /* BitSet.swift */,
 				C46F900C25762D4300DE7793 /* main.swift */,
 				C43D6C9525762DBA002A65C0 /* day01.swift */,
 				C4B8CBC22577589D00D0CAE3 /* day02.swift */,
@@ -93,10 +102,10 @@
 				C4B7C46D257B4964009B506B /* day05.swift */,
 				C44C0D82257C9C4F00BD4AE9 /* day06input.swift */,
 				C44C0D85257C9C5E00BD4AE9 /* day06.swift */,
-				C42B531F257EA85E0023D120 /* string.swift */,
-				C42B5322257EA8790023D120 /* graph.swift */,
 				C42B5317257DEDDF0023D120 /* day07input.swift */,
 				C42B531A257DEDE60023D120 /* day07.swift */,
+				C40AA373257F3F4700E3109D /* day08input.swift */,
+				C40AA370257F3F4000E3109D /* day08.swift */,
 			);
 			path = aoc2020;
 			sourceTree = "<group>";
@@ -159,7 +168,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42B5323257EA8790023D120 /* graph.swift in Sources */,
+				C40AA374257F3F4700E3109D /* day08input.swift in Sources */,
 				C44C0D86257C9C5E00BD4AE9 /* day06.swift in Sources */,
+				C40AA371257F3F4000E3109D /* day08.swift in Sources */,
 				C42B5320257EA85F0023D120 /* string.swift in Sources */,
 				C46F900D25762D4300DE7793 /* main.swift in Sources */,
 				C43D6C9625762DBA002A65C0 /* day01.swift in Sources */,
@@ -170,6 +181,7 @@
 				C4B7C46E257B4964009B506B /* day05.swift in Sources */,
 				C44C0D83257C9C4F00BD4AE9 /* day06input.swift in Sources */,
 				C4B7C471257B4969009B506B /* day05input.swift in Sources */,
+				C40AA378257F4DAA00E3109D /* BitSet.swift in Sources */,
 				C47AEF8A2578AA66009D6695 /* day03.swift in Sources */,
 				C42B531B257DEDE60023D120 /* day07.swift in Sources */,
 			);
