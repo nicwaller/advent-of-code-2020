@@ -46,11 +46,7 @@ func seqFinder(list: [Int], _ target: Int) -> Optional<([Int], Range<Int>)> {
     var head = 0
     var tail = 0
     
-    while true {
-        if head >= list.count {
-            break
-        }
-
+    while head < list.count {
         // Compute a subsequence sum in O(1) time. ;)
         let sum = sumlist[head + 1] - sumlist[tail]
 
@@ -59,7 +55,6 @@ func seqFinder(list: [Int], _ target: Int) -> Optional<([Int], Range<Int>)> {
             return (seq, tail ..< head)
         } else if sum > target {
             tail += 1
-            head = min(head, tail)
         } else if sum < target {
             head += 1
         }
