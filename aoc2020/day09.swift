@@ -21,27 +21,50 @@ func containsValid(list: [Int], range: Range<Int>, val: Int) -> Bool {
 func firstInvalid(list: [Int], preambleSize: Int = 25) -> Int {
     for x in preambleSize ..< list.count {
         if !containsValid(list: list, range: x-preambleSize ..< x, val: list[x]) {
-            print(x)
             return list[x]
         }
     }
     return -1
 }
 
-func seqFinder(list: [Int], _ target: Int) -> [Int] {
-    for x in 0 ..< list.count {
-        for y in x ..< list.count {
-            let sum = list[x ... y].reduce(0, +)
-            if sum == target {
-                return Array(list[x...y])
-            } else if sum > target {
-                break
-            } else {
-                continue
-            }
+func seqFinder(list: [Int], _ target: Int) -> Optional<([Int], Range<Int>)> {
+    // TODO: assert() that list is ordered ascending
+
+    // Our goal is to calculate sums of subsequences
+    // We can accelerate that by exploiting the commutative property of numeric sequences
+    // If we pre-compute a sum list in O(n) time,
+    // Then we can compute any subsequence sum in O(1) time.
+    var sumlist: [Int] = []
+    sumlist.append(0)
+    for i in 0 ..< list.count {
+        sumlist.append(list[i] + sumlist[i])
+    }
+    
+    // Imagine a worm crawling along the number sequence
+    // If the worm is too small, the head advances and eats a number
+    // If the worm is too big, the tail needs to catch up to the head
+    var head = 0
+    var tail = 0
+    
+    while true {
+        if head >= list.count {
+            break
+        }
+
+        // Compute a subsequence sum in O(1) time. ;)
+        let sum = sumlist[head + 1] - sumlist[tail]
+
+        if sum == target {
+            let seq = Array(list[tail ... head])
+            return (seq, tail ..< head)
+        } else if sum > target {
+            tail += 1
+            head = min(head, tail)
+        } else if sum < target {
+            head += 1
         }
     }
-    return [];
+    return nil
 }
 
 func day09() {
@@ -51,21 +74,25 @@ func day09() {
     let cipherVals = day9puzzleInput.splitOn(.newlines).map({ Int($0)! })
     let fi = firstInvalid(list: cipherVals)
     assert(375054920 == fi)
-    print(fi)
+    print("Part 1: \(fi)")
     
-    let a2list = seqFinder(list: cipherVals, fi)
+    // Part 2
+    guard let (a2list, a2range) = seqFinder(list: cipherVals, fi) else {
+        print("failed to find sequence")
+        return
+    }
     let a2 = a2list.min()! + a2list.max()!
-    assert(47412131 != a2)
     assert(54142584 == a2)
-    print(a2)
+    print("Part 2: \(a2) sum found at \(a2range)")
 }
 
 func day09test() {
-    var example: [Int] = Array(1 ... 25)
+    let example: [Int] = Array(1 ... 25)
     assert(true == containsValid(list: example, range: 0 ..< 25, val: 26))
     assert(true == containsValid(list: example, range: 0 ..< 25, val: 49))
     assert(false == containsValid(list: example, range: 0 ..< 25, val: 100))
     assert(false == containsValid(list: example, range: 0 ..< 25, val: 50))
+
     let example2 = """
 35
 20
@@ -87,7 +114,8 @@ func day09test() {
 277
 309
 576
-"""
-    let e2 = example2.splitOn(.newlines).map({ Int($0)! })
-    assert(127 == firstInvalid(list: e2, preambleSize: 5))
+""".splitOn(.newlines).map({ Int($0)! })
+    assert(127 == firstInvalid(list: example2, preambleSize: 5))
+    
+    assert(([2, 3], 1 ..< 2 ) == seqFinder(list: [1, 2, 3, 4], 5) ?? ([], 0 ..< 0))
 }
