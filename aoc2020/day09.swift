@@ -70,20 +70,28 @@ func seqFinder(list: [Int], _ target: Int) -> Optional<([Int], Range<Int>)> {
 func day09() {
     day09test()
     
+    // run your work
+    var start: CFAbsoluteTime = 0.0
+    var stop: CFAbsoluteTime = 0.0
+    
     // Part 1
     let cipherVals = day9puzzleInput.splitOn(.newlines).map({ Int($0)! })
+    start = CFAbsoluteTimeGetCurrent()
     let fi = firstInvalid(list: cipherVals)
+    stop = CFAbsoluteTimeGetCurrent()
     assert(375054920 == fi)
-    print("Part 1: \(fi)")
+    print("Part 1: \(fi) (in \(round((stop - start) * 1000)) ms)")
     
     // Part 2
+    start = CFAbsoluteTimeGetCurrent()
     guard let (a2list, a2range) = seqFinder(list: cipherVals, fi) else {
         print("failed to find sequence")
         return
     }
+    stop = CFAbsoluteTimeGetCurrent()
     let a2 = a2list.min()! + a2list.max()!
     assert(54142584 == a2)
-    print("Part 2: \(a2) sum found at \(a2range)")
+    print("Part 2: \(a2) sum found at \(a2range) (in \(round((stop - start) * 1000)) ms)")
 }
 
 func day09test() {
