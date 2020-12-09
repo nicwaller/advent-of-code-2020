@@ -7,29 +7,20 @@
 
 import Foundation
 
-func containsValid(list: [Int], range: Range<Int>, val: Int) -> Bool {
-    for x in range.startIndex ..< list.count {
-        for y in x ..< list.count {
-            if list[x] + list[y] == val && list[x] != list[y] {
-                return true;
+func firstInvalid(list: [Int], preambleSize: Int = 25) -> Optional<Int> {
+    candidateSearch: for x in preambleSize ..< list.count {
+        let q = list[x - preambleSize ..< x]
+        for pick in q {
+            if q.contains(list[x] - pick) {
+                continue candidateSearch
             }
         }
+        return list[x]
     }
-    return false;
-}
-
-func firstInvalid(list: [Int], preambleSize: Int = 25) -> Int {
-    for x in preambleSize ..< list.count {
-        if !containsValid(list: list, range: x-preambleSize ..< x, val: list[x]) {
-            return list[x]
-        }
-    }
-    return -1
+    return nil
 }
 
 func seqFinder(list: [Int], _ target: Int) -> Optional<([Int], Range<Int>)> {
-    // TODO: assert() that list is ordered ascending
-
     // Our goal is to calculate sums of subsequences
     // We can accelerate that by exploiting the commutative property of numeric sequences
     // If we pre-compute a sum list in O(n) time,
@@ -72,7 +63,7 @@ func day09() {
     // Part 1
     let cipherVals = day9puzzleInput.splitOn(.newlines).map({ Int($0)! })
     start = CFAbsoluteTimeGetCurrent()
-    let fi = firstInvalid(list: cipherVals)
+    let fi = firstInvalid(list: cipherVals)!
     stop = CFAbsoluteTimeGetCurrent()
     assert(375054920 == fi)
     print("Part 1: \(fi) (in \(round((stop - start) * 1000)) ms)")
@@ -90,12 +81,6 @@ func day09() {
 }
 
 func day09test() {
-    let example: [Int] = Array(1 ... 25)
-    assert(true == containsValid(list: example, range: 0 ..< 25, val: 26))
-    assert(true == containsValid(list: example, range: 0 ..< 25, val: 49))
-    assert(false == containsValid(list: example, range: 0 ..< 25, val: 100))
-    assert(false == containsValid(list: example, range: 0 ..< 25, val: 50))
-
     let example2 = """
 35
 20
