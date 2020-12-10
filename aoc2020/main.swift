@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol AOC {
+    func test();
+    func part1();
+    func part2();
+}
+
 //day01()
 //day02()
 //day03()
@@ -15,4 +21,9 @@ import Foundation
 //day06()
 //day07()
 //day08()
-day09()
+//day09()
+
+let aoc = Day10()
+aoc.test()
+aoc.part1()
+aoc.part2()
