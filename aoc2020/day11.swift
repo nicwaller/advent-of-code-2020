@@ -56,30 +56,50 @@ L.LLLLLL.L
 L.LLLLL.LL
 """)
     
-    func next(_ W: World, x: Int, y: Int) -> State {
-        if W[y][x] == .floor {
-            return .floor
-        }
+    func visibleOccupied(_ W: World, x: Int, y: Int) -> Int {
         let x0 = max(x-1, 0)
         let x1 = min(x+1, W[0].count-1)
         let y0 = max(y-1, 0)
         let y1 = min(y+1, W.count-1)
         var nearbyEmpty = 0
         var nearbyOccupied = 0
-        for ix in x0 ... x1 {
-            for iy in y0 ... y1 {
-                if (ix == x && iy == y) {
+        for dx in -1 ... 1 {
+            for dy in -1 ... 1 {
+                if (dx == 0 && dy == 0) {
                     continue
-                } else if W[iy][ix] == .occupied {
+                }
+                var ix = x
+                var iy = y
+                var visible: State = .floor
+                while visible == .floor {
+                    ix += dx
+                    iy += dy
+                    if ix < 0 || iy < 0 || ix >= W[0].count || iy >= W.count {
+                        break
+                    } else {
+                        visible = W[iy][ix]
+                    }
+                }
+                if visible == .occupied {
                     nearbyOccupied += 1
-                } else if W[iy][ix] == .empty {
+                } else if visible == .empty {
                     nearbyEmpty += 1
                 }
             }
         }
-        if nearbyOccupied == 0 {
+//        print(render(W))
+        return nearbyOccupied
+    }
+    
+    func next(_ W: World, x: Int, y: Int) -> State {
+        if W[y][x] == .floor {
+            return .floor
+        }
+
+        let occ = visibleOccupied(W, x: x, y: y)
+        if occ == 0 {
             return .occupied
-        } else if nearbyOccupied >= 4 {
+        } else if occ >= 5 {
             return .empty
         } else {
             return W[y][x]
@@ -98,7 +118,10 @@ L.LLLLL.LL
 
     func anneal(origin: World) -> World {
         var current = origin
+        var round = 0
         while true {
+            round += 1
+            print("round = \(round)")
             let next = oneEvolution(origin: current)
             if next == current {
                 break
@@ -122,12 +145,40 @@ L.LLLLL.LL
     }
     
     func test() {
-        let x = example1
-        print(render(x))
-        let y = anneal(origin: x)
-        print(render(y))
-        let z = countOccupied(y)
-        print(z)
+        let t1 = Day11.parse("""
+.......#.
+...#.....
+.#.......
+.........
+..#L....#
+....#....
+.........
+#........
+...#.....
+""")
+        let t1a = visibleOccupied(t1, x: 3, y: 4)
+        assert(8 == t1a)
+
+        let t2 = Day11.parse("""
+.............
+.L.L.#.#.#.#.
+.............
+""")
+        let t2a = visibleOccupied(t2, x: 1, y: 1)
+        assert(0 == t2a)
+
+        let t3 = Day11.parse("""
+.##.##.
+#.#.#.#
+##...##
+...L...
+##...##
+#.#.#.#
+.##.##.
+""")
+        let t3a = visibleOccupied(t3, x: 3, y: 3)
+        assert(0 == t3a)
+
     }
     
     func render(_ W: World) -> String {
@@ -146,16 +197,17 @@ L.LLLLL.LL
         
     
     func part1() -> Void {
-        let W = anneal(origin: input)
-        print(countOccupied(W))
+//        let W = anneal(origin: input)
+//        print(countOccupied(W))
 //        let A = distribution(input)
 //        assert((72, 0, 33) == A)
 //        print("Part 1: \(A.0 * A.2) from distribution \(A)")
     }
     
     func part2() -> Void {
-//        let P = permutations(input)
-//        assert(129586085429248 == P)
-//        print("Part 2: \(P)")
+        let W = anneal(origin: input)
+        let c = countOccupied(W)
+        assert(2128 == c)
+        print(countOccupied(W))
     }
 }
