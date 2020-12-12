@@ -30,6 +30,8 @@
 		EA4F606D2581D37400245F48 /* day10input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4F606C2581D37400245F48 /* day10input.swift */; };
 		EA6B4970258334A60032B658 /* day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B496F258334A60032B658 /* day11.swift */; };
 		EA6B4973258334AD0032B658 /* day11input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B4972258334AD0032B658 /* day11input.swift */; };
+		EAEFA2002584856C0069320D /* day12input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEFA1FF2584856C0069320D /* day12input.swift */; };
+		EAEFA203258485700069320D /* day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEFA202258485700069320D /* day12.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +71,8 @@
 		EA4F606C2581D37400245F48 /* day10input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day10input.swift; sourceTree = "<group>"; };
 		EA6B496F258334A60032B658 /* day11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day11.swift; sourceTree = "<group>"; };
 		EA6B4972258334AD0032B658 /* day11input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day11input.swift; sourceTree = "<group>"; };
+		EAEFA1FF2584856C0069320D /* day12input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day12input.swift; sourceTree = "<group>"; };
+		EAEFA202258485700069320D /* day12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day12.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 				EA4F60692581D36D00245F48 /* day10.swift */,
 				EA6B4972258334AD0032B658 /* day11input.swift */,
 				EA6B496F258334A60032B658 /* day11.swift */,
+				EAEFA1FF2584856C0069320D /* day12input.swift */,
+				EAEFA202258485700069320D /* day12.swift */,
 			);
 			path = aoc2020;
 			sourceTree = "<group>";
@@ -205,6 +211,8 @@
 				C4B7C471257B4969009B506B /* day05input.swift in Sources */,
 				C40AA378257F4DAA00E3109D /* BitSet.swift in Sources */,
 				C47AEF8A2578AA66009D6695 /* day03.swift in Sources */,
+				EAEFA2002584856C0069320D /* day12input.swift in Sources */,
+				EAEFA203258485700069320D /* day12.swift in Sources */,
 				EA6B4973258334AD0032B658 /* day11input.swift in Sources */,
 				EA4F606D2581D37400245F48 /* day10input.swift in Sources */,
 				C42B531B257DEDE60023D120 /* day07.swift in Sources */,
