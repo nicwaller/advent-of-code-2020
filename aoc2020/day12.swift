@@ -29,11 +29,12 @@ F7
 R90
 F11
 """)
-    
+        
     func finalOffset(moves: [Instruction]) -> (Int, Int) {
-        var x = 0
-        var y = 0
-        var bearing = 0.0 // start facing east
+        var shipx = 0
+        var shipy = 0
+        var x = 10
+        var y = 1
         for m in moves {
             switch m.0 {
             case "N":
@@ -49,45 +50,87 @@ F11
                 x -= m.1
                 break
             case "L":
-                bearing += Double(m.1)
+                (x, y) = rotateLeft(x: x, y: y, degrees: m.1)
                 break
             case "R":
-                bearing -= Double(m.1)
+                (x, y) = rotateRight(x: x, y: y, degrees: m.1)
                 break
             case "F":
-                let dx = m.1 * Int(cos(bearing / 180 * Double.pi))
-                let dy = m.1 * Int(sin(bearing / 180 * Double.pi))
-                x += dx
-                y += dy
+                let dx = m.1 * x
+                let dy = m.1 * y
+                shipx += dx
+                shipy += dy
             default:
                 print("what")
             }
-            print(m)
-            print((x,y, bearing))
+//            print(m)
+//            print("waypoint: \((x, y))")
+//            print("ship: \((shipx, shipy))")
         }
-        return (x, y)
+        return (shipx, shipy)
+    }
+
+    func rotateLeft(x: Int, y: Int, degrees: Int) -> (Int, Int) {
+        var nx = x
+        var ny = y
+        for _ in 1 ... (degrees / 90) {
+            (nx, ny) = (-ny, nx)
+        }
+        print (nx, ny)
+        return (nx, ny)
+//        var r = (0, 0)
+//        switch (degrees + 3599640) % 360 {
+//        case 0:
+//            r = (x, y)
+//        case 90:
+//            r = (y, x)
+//        case 180:
+//            r = (-x, -y)
+//        case 270:
+//            r = (y, -x)
+//        default:
+//            r = (0, 0)
+//        }
+////        print(x, y, degrees, r)
+//        return r
+    }
+    
+    func rotateRight(x: Int, y: Int, degrees: Int) -> (Int, Int) {
+        var nx = x
+        var ny = y
+        for _ in 1 ... (degrees / 90) {
+            (nx, ny) = (ny, -nx)
+        }
+        print (nx, ny)
+        return (nx, ny)
     }
     
     func test() {
+        assert((0, 1) == rotateLeft(x: 1, y: 0, degrees: 90))
+        assert((-1, 0) == rotateLeft(x: 1, y: 0, degrees: 180))
+        assert((0, -1) == rotateLeft(x: 1, y: 0, degrees: 270))
+        assert((1, 0) == rotateLeft(x: 1, y: 0, degrees: 360))
+//        assert((0, -1) == rotateLeft(x: 1, y: 0, degrees: -90))
+//        assert((-1, 0) == rotateLeft(x: 1, y: 0, degrees: -180))
+//        assert((0, 1) == rotateLeft(x: 1, y: 0, degrees: -270))
+
         let d = finalOffset(moves: example1)
         let manhattan = abs(d.0) + abs(d.1)
-        print(manhattan)
-        assert(25 == manhattan)
+//        print(manhattan)
+        assert(286 == manhattan)
     }
     
     func part1() -> Void {
-        let d = finalOffset(moves: input)
-        let manhattan = abs(d.0) + abs(d.1)
-        assert(545 != manhattan)
-        assert(1439 != manhattan)
-        assert(445 == manhattan)
-        print("Part 1: \(manhattan)")
     }
     
     func part2() -> Void {
-//        let W = anneal(origin: input)
-//        let c = countOccupied(W)
-//        assert(2128 == c)
-//        print(countOccupied(W))
+        let d = finalOffset(moves: input)
+        let manhattan = abs(d.0) + abs(d.1)
+//        assert(545 != manhattan)
+//        assert(1439 != manhattan)
+//        assert(445 == manhattan)
+        print("Part 2: \(manhattan)")
+        assert(36449 != manhattan)
+        assert(36423 != manhattan)
     }
 }
