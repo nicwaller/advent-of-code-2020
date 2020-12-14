@@ -82,12 +82,13 @@ class Day13: AOC {
             }
         }
         var t = start
+        let locked = 1
         search: while true {
             t += skip
             if (t - start) % (skip * 10000000) == 0 {
                 print(t)
             }
-            for (idx, route) in S {
+            for (idx, route) in S[locked ..< S.count] {
                 let b = (t + idx) % route
                 if b != 0 {
                     continue search

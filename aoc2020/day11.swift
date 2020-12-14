@@ -57,10 +57,10 @@ L.LLLLL.LL
 """)
     
     func visibleOccupied(_ W: World, x: Int, y: Int) -> Int {
-        let x0 = max(x-1, 0)
-        let x1 = min(x+1, W[0].count-1)
-        let y0 = max(y-1, 0)
-        let y1 = min(y+1, W.count-1)
+//        let x0 = max(x-1, 0)
+//        let x1 = min(x+1, W[0].count-1)
+//        let y0 = max(y-1, 0)
+//        let y1 = min(y+1, W.count-1)
         var nearbyEmpty = 0
         var nearbyOccupied = 0
         for dx in -1 ... 1 {

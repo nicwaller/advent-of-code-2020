@@ -23,7 +23,7 @@ protocol AOC {
 //day08()
 //day09()
 
-let aoc = Day13()
+let aoc = Day14()
 aoc.test()
 aoc.part1()
 aoc.part2()

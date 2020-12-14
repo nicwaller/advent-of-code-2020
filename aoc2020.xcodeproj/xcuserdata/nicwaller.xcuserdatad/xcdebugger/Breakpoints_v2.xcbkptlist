@@ -208,8 +208,8 @@
             filePath = "aoc2020/day13.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "test()"
             landmarkType = "7">
          </BreakpointContent>
@@ -256,8 +256,8 @@
             filePath = "aoc2020/day13.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "part1()"
             landmarkType = "7">
          </BreakpointContent>
@@ -288,8 +288,8 @@
             filePath = "aoc2020/day13.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "smarterGoldCoin(routes:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -305,8 +305,8 @@
             filePath = "aoc2020/day13.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "smarterGoldCoin(routes:)"
             landmarkType = "7">
          </BreakpointContent>
