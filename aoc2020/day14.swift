@@ -61,7 +61,8 @@ class Day14: AOC {
     func polymask(_ mask: Int) -> [Int] {
         guard mask != 0 else { return [0] }
         if (mask & 1) == 1 {
-            return polymask(mask >> 1).map{ $0 << 1 } + polymask(mask >> 1).map{ $0 << 1 + 1 }
+            let subs = polymask(mask >> 1)
+            return subs.map{ $0 << 1 } + subs.map{ $0 << 1 + 1 }
         } else {
             return polymask(mask >> 1).map{ $0 << 1 }
         }
@@ -74,8 +75,22 @@ class Day14: AOC {
     }
     
     func part2() -> Void {
-        let A = run(Day14.parse(day14puzzleinput)).values.reduce(0, +)
-        print("Part 2: \(A)")
+        // run your work
+        var startParse: CFAbsoluteTime = 0.0
+        var stopParse: CFAbsoluteTime = 0.0
+        var startRun: CFAbsoluteTime = 0.0
+        var stopRun: CFAbsoluteTime = 0.0
+        
+        // Part 1
+        startParse = CFAbsoluteTimeGetCurrent()
+        let P = Day14.parse(day14puzzleinput)
+        stopParse = CFAbsoluteTimeGetCurrent()
+
+        startRun = CFAbsoluteTimeGetCurrent()
+        let A = run(P).values.reduce(0, +)
+        stopRun = CFAbsoluteTimeGetCurrent()
+
+        print("Part 2: \(A) (parse in \(round((stopParse - startParse) * 1000)) ms, run in \(round((stopRun - startRun) * 1000)) ms)")
         assert(A == 2741969047858)
     }
 }
