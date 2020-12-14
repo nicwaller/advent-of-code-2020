@@ -64,7 +64,11 @@ class Day14: AOC {
             let subs = polymask(mask >> 1)
             return subs.map{ $0 << 1 } + subs.map{ $0 << 1 + 1 }
         } else {
-            return polymask(mask >> 1).map{ $0 << 1 }
+            if (mask & 0xF == 0) {
+                return polymask(mask >> 4).map{ $0 << 4 }
+            } else {
+                return polymask(mask >> 1).map{ $0 << 1 }
+            }
         }
     }
     
