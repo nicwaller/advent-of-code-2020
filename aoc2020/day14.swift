@@ -51,7 +51,7 @@ class Day14: AOC {
                 break
             case .mask:
                 onMask = instruction.v0
-                xorMasks = polymask(instruction.v1)
+                xorMasks = fast_polymask(instruction.v1)
                 break
             }
         }
@@ -59,20 +59,76 @@ class Day14: AOC {
     }
 
     func polymask(_ mask: Int) -> [Int] {
+        // TODO: faster version
+        // pre-allocate the entire buffer all at once
+        // then fill in the bits with reducing stride lengths
         guard mask != 0 else { return [0] }
         if (mask & 1) == 1 {
             let subs = polymask(mask >> 1)
             return subs.map{ $0 << 1 } + subs.map{ $0 << 1 + 1 }
+        } else if (mask & 0xF == 0) {
+            // this branch only exists as a mild performance optimization
+            return polymask(mask >> 4).map{ $0 << 4 }
         } else {
-            if (mask & 0xF == 0) {
-                return polymask(mask >> 4).map{ $0 << 4 }
-            } else {
-                return polymask(mask >> 1).map{ $0 << 1 }
+            return polymask(mask >> 1).map{ $0 << 1 }
+        }
+    }
+    
+    // currently this is actually slower, but maybe there is more room for optimization? -NW
+    func fast_polymask(_ mask: Int) -> [Int] {
+//        print(String(mask, radix: 2))
+        // TODO: faster with malloc?
+        let onBits = popcnt(mask)
+        guard onBits != 0 else { return [0] }
+        let count = (1 << onBits)
+        var result: [Int] = []
+        for _ in 0 ..< count {
+            result.append(0)
+        }
+        result.reserveCapacity(count)
+        var span = 1
+        var steps = count >> 1
+        for i in 0 ..< 36 {
+            let selector = 1 << i
+            let bit = mask & selector
+            if bit > 0 {
+                var pos = 0
+                for _ in 0 ..< steps {
+                    for _ in 0 ..< span {
+                        result[pos] = result[pos] | selector
+                        pos += 1
+                    }
+                    pos += span
+                }
+                steps = steps >> 1
+                span = span << 1
             }
+            // TODO: end the loop early, if possible?
+        }
+        return result
+    }
+    
+    // this could be MUCH faster -NW
+    // http://graphics.stanford.edu/~seander/bithacks.html
+    func popcnt(_ n: Int) -> Int {
+        if n == 0 {
+            return 0
+        } else {
+            return n & 1 + popcnt(n >> 1)
         }
     }
     
     func test() -> Void {
+        assert(0 == popcnt(0b0000))
+        assert(1 == popcnt(0b0001))
+        assert(1 == popcnt(0b0010))
+        assert(2 == popcnt(0b0011))
+        assert(3 == popcnt(0b0111))
+        
+        for x in 0...5 {
+            print(polymask(x))
+            print(fast_polymask(x))
+        }
     }
 
     func part1() -> Void {
