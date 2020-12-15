@@ -36,6 +36,8 @@
 		EA6B4973258334AD0032B658 /* day11input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B4972258334AD0032B658 /* day11input.swift */; };
 		EAEFA2002584856C0069320D /* day12input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEFA1FF2584856C0069320D /* day12input.swift */; };
 		EAEFA203258485700069320D /* day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEFA202258485700069320D /* day12.swift */; };
+		EAF269352588796800E55C30 /* day15input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF269342588796800E55C30 /* day15input.swift */; };
+		EAF269382588796C00E55C30 /* day15.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF269372588796C00E55C30 /* day15.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,6 +83,8 @@
 		EA6B4972258334AD0032B658 /* day11input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day11input.swift; sourceTree = "<group>"; };
 		EAEFA1FF2584856C0069320D /* day12input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day12input.swift; sourceTree = "<group>"; };
 		EAEFA202258485700069320D /* day12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day12.swift; sourceTree = "<group>"; };
+		EAF269342588796800E55C30 /* day15input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day15input.swift; sourceTree = "<group>"; };
+		EAF269372588796C00E55C30 /* day15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = day15.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,8 @@
 				EA48A46D2585D7D9002B1A4E /* day13.swift */,
 				EA48A4B5258726C2002B1A4E /* day14input.swift */,
 				EA48A4B8258726C5002B1A4E /* day14.swift */,
+				EAF269342588796800E55C30 /* day15input.swift */,
+				EAF269372588796C00E55C30 /* day15.swift */,
 			);
 			path = aoc2020;
 			sourceTree = "<group>";
@@ -205,6 +211,7 @@
 			files = (
 				C42B5323257EA8790023D120 /* graph.swift in Sources */,
 				C42F69942580917C00EC0773 /* day09input.swift in Sources */,
+				EAF269382588796C00E55C30 /* day15.swift in Sources */,
 				EA48A4B6258726C2002B1A4E /* day14input.swift in Sources */,
 				C40AA374257F3F4700E3109D /* day08input.swift in Sources */,
 				C44C0D86257C9C5E00BD4AE9 /* day06.swift in Sources */,
@@ -230,6 +237,7 @@
 				EAEFA2002584856C0069320D /* day12input.swift in Sources */,
 				EAEFA203258485700069320D /* day12.swift in Sources */,
 				EA6B4973258334AD0032B658 /* day11input.swift in Sources */,
+				EAF269352588796800E55C30 /* day15input.swift in Sources */,
 				EA4F606D2581D37400245F48 /* day10input.swift in Sources */,
 				C42B531B257DEDE60023D120 /* day07.swift in Sources */,
 			);
