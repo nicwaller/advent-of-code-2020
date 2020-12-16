@@ -89,7 +89,75 @@ nearby tickets:
         print(errorRate)
     }
     
+    func testCond(cond: Condition, fieldIndex: Int, tickets: [Ticket]) -> Bool {
+        search: for t in tickets {
+            let val = t[fieldIndex]
+            if cond.1.contains(val) || cond.2.contains(val) {
+                continue search
+            } else {
+                // we found at least one ticket that doesn't satisfy this hypothesis
+                return false
+            }
+        }
+        return true
+    }
+    
     func part2() -> Void {
+        let P = Day16.parse(day16puzzleinput)
+        var validTickets: [Ticket] = []
+        for ticket in P.2 {
+            let (ok, _) = basicOK(ticket, conditions: P.0)
+            if ok {
+                validTickets.append(ticket)
+            }
+        }
+        
+        // fieldname -> possible indexes
+        var maybeMappings: Dictionary<String, Set<Int>> = [:]
+        for cond in P.0 {
+            for i in 0 ..< P.0.count {
+                if testCond(cond: cond, fieldIndex: i, tickets: validTickets) {
+                    maybeMappings[cond.0, default: Set()].insert(i)
+                } else {
+//                    print("rejected hypothesis: \(cond.0) is maybe \(i)")
+                }
+            }
+        }
 
+        var confirmed: Dictionary<String, Int> = [:]
+        while true {
+            var knownKey: Optional<String> = nil
+            var knownPlacement: Optional<Int> = nil
+            for (offset, element) in maybeMappings.enumerated() {
+                let (k, v) = element
+//                print(v)
+                if v.count == 1 {
+                    knownKey = k
+                    knownPlacement = v.first
+//                    maybeMappings[k].remove(v.first!)
+                }
+            }
+            if knownPlacement == nil {
+//                print("could not resolve next")
+                break
+            }
+            confirmed[knownKey!] = knownPlacement
+            print((knownKey, knownPlacement))
+            for (key, possibilities) in maybeMappings {
+                var smaller: Set = possibilities
+                smaller.remove(knownPlacement!)
+                maybeMappings[key] = smaller
+            }
+//            maybeMappings[k] = Set()
+        }
+//        print(confirmed)
+        let myTicket: Ticket = P.1
+        let A = confirmed
+            .filter{ $0.key.hasPrefix("departure") }
+            .map{ myTicket[$0.value] }
+            .reduce(1, *)
+        print(A)
+        assert(A > 1021440)
+        // print(maybeMappings.values.map{ $0.count }.reduce(1, *)) // 2432902008176640000
     }
 }
