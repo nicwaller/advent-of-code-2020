@@ -14,21 +14,28 @@ class Day15: AOC {
     }
     
     func nthn(n: Int, input: [Int]) -> Int {
-        var history: [Int] = input.reversed()
+        var seen: [Int] = Array(repeating: -1, count: 40000000)
+//        for _ in 0 ... n {
+//            seen.append(0)
+//        }
         var lastWasNovel: Bool = true
-        for _ in input.count ..< n {
-            var newNum = -1
+        var distance: Int = 0
+        var newNum = -1
+        for (idx, num) in input.enumerated() {
+            seen[num] = idx + 1
+        }
+        for turn in input.count+1 ... n {
             if lastWasNovel {
                 newNum = 0
             } else {
-                let diff = history[1...].firstIndex(of: history.first!)!
-                newNum = diff
+                newNum = distance
             }
-            
-            lastWasNovel = !history.contains(newNum)
-            history.insert(newNum, at: 0)
+
+            lastWasNovel = seen[newNum] == -1
+            distance = turn - seen[newNum]
+            seen[newNum] = turn
         }
-        return history.first!
+        return newNum
     }
         
     func test() -> Void {
@@ -45,7 +52,7 @@ class Day15: AOC {
     func part1() -> Void {
         print("Part 1")
         let P = Day15.parse(day15puzzleinput)
-        print(nthn(n: 2020, input: P))
+        print(nthn(n: 30000000, input: P))
     }
     
     func part2() -> Void {
