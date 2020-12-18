@@ -111,12 +111,18 @@ class Day18: AOC {
         }
         
         // Part 2, do the math
-        while simpleExpression.count > 1 {
-            let x = extract(simpleExpression[0])!
-            let y = extract(simpleExpression[2])!
+        while simpleExpression.count >= 3 {
+            var l = 0
+            if simpleExpression.contains(Token.add) {
+                l = simpleExpression.firstIndex(of: Token.add)! - 1
+            } else {
+                l = 0
+            }
+            let x = extract(simpleExpression[l + 0])!
+            let y = extract(simpleExpression[l + 2])!
 
             var result: Optional<Int> = nil
-            switch simpleExpression[1] {
+            switch simpleExpression[l + 1] {
             case .add:
                 result = x + y
                 break
@@ -127,7 +133,7 @@ class Day18: AOC {
                 print("unknown")
                 return nil
             }
-            simpleExpression.replaceSubrange(0 ... 2, with: [ Day18.Token.value(result!) ])
+            simpleExpression.replaceSubrange(l ... l + 2, with: [ Day18.Token.value(result!) ])
         }
         return extract(simpleExpression[0])
     }
@@ -137,32 +143,24 @@ class Day18: AOC {
     }
     
     func test() -> Void {
-        assert(71 == evalstr("1 + 2 * 3 + 4 * 5 + 6"))
-        assert(44 == evalstr("(4 * (5 + 6))"))
+        assert(231 == evalstr("1 + 2 * 3 + 4 * 5 + 6"))
         assert(51 == evalstr("1 + (2 * 3) + (4 * (5 + 6))"))
-        assert(26 == evalstr("2 * 3 + (4 * 5)"))
-        assert(437 == evalstr("5 + (8 * 3 + 9 + 3 * 4 * 3)"))
-        assert(12240 == evalstr("5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))"))
-        assert(13632 == evalstr("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2"))
+        assert(46 == evalstr("2 * 3 + (4 * 5)"))
+        assert(1445 == evalstr("5 + (8 * 3 + 9 + 3 * 4 * 3)"))
+        assert(669060 == evalstr("5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))"))
+        assert(23340 == evalstr("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2"))
+        
         print("tests OK")
     }
     
 
     func part1() -> Void {
-        let P = Day18.parse(day18puzzleinput)
-        print(P)
-        let A = P.map{ eval($0)! }.reduce(0, +)
-        print("Part 1: \(A)")
-//        assert(A == 291)
     }
     
     func part2() -> Void {
-//        var P = Day18.parse(day18puzzleinput)
-//        print(P)
-//
-//
-//        let A = P.count
-//        print("Part 2: \(A)")
-////        assert(A == 291)
+        let P = Day18.parse(day18puzzleinput)
+        let A = P.map{ eval($0)! }.reduce(0, +)
+        print("Part 2: \(A)")
+        assert(A == 320536571743074)
     }
 }
