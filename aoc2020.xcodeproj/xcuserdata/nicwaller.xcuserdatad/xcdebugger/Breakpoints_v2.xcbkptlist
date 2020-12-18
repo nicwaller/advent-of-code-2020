@@ -440,5 +440,164 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CA5D1619-707A-4F01-AC4B-5FB2E966A9AE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aoc2020/day18.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "eval(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7AEC0063-0659-41B2-A3AB-BB3CD5CA73C1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aoc2020/day18.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "parseLine(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5FB5471-B752-4AAD-9996-6712D3098BC0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aoc2020/day18.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "parseLine(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A5FB5471-B752-4AAD-9996-6712D3098BC0 - fcca35c5f53cea07"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static aoc2020.Day18.parseLine(Swift.String) -&gt; Swift.Array&lt;aoc2020.Day18.Token&gt;"
+                  moduleName = "aoc2020"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicwaller/workspace/advent-of-code-2020/aoc2020/day18.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "324">
+               </Location>
+               <Location
+                  uuid = "A5FB5471-B752-4AAD-9996-6712D3098BC0 - fcca35c5f53cea07"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static aoc2020.Day18.parseLine(Swift.String) -&gt; Swift.Array&lt;aoc2020.Day18.Token&gt;"
+                  moduleName = "aoc2020"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicwaller/workspace/advent-of-code-2020/aoc2020/day18.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "548">
+               </Location>
+               <Location
+                  uuid = "A5FB5471-B752-4AAD-9996-6712D3098BC0 - fcca35c5f53cea07"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static aoc2020.Day18.parseLine(Swift.String) -&gt; Swift.Array&lt;aoc2020.Day18.Token&gt;"
+                  moduleName = "aoc2020"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicwaller/workspace/advent-of-code-2020/aoc2020/day18.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "1568">
+               </Location>
+               <Location
+                  uuid = "A5FB5471-B752-4AAD-9996-6712D3098BC0 - fcca35c5f53cea07"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static aoc2020.Day18.parseLine(Swift.String) -&gt; Swift.Array&lt;aoc2020.Day18.Token&gt;"
+                  moduleName = "aoc2020"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicwaller/workspace/advent-of-code-2020/aoc2020/day18.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "1788">
+               </Location>
+               <Location
+                  uuid = "A5FB5471-B752-4AAD-9996-6712D3098BC0 - fcca35c5f53cea07"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static aoc2020.Day18.parseLine(Swift.String) -&gt; Swift.Array&lt;aoc2020.Day18.Token&gt;"
+                  moduleName = "aoc2020"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nicwaller/workspace/advent-of-code-2020/aoc2020/day18.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "2008">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "30E4F4A2-5E20-4ABC-BE3A-AAC9F4F798E4"
+            shouldBeEnabled = "No"
+            condition = "E.count == 9 &amp;&amp; depth == 1"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aoc2020/day18.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "eval(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7A0689B2-AFFA-4D7A-9FA2-A3C4D61B7644"
+            shouldBeEnabled = "No"
+            condition = "E.count == 9"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "aoc2020/day18.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "eval(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
