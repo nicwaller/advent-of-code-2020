@@ -21,6 +21,8 @@ class Day19: AOC {
         case any([Rule])
         case series([Rule])
         indirect case sub(Int)
+        case repetition(Int)
+        case fuck(Int, Int)
     }
         
     typealias Message = String
@@ -60,6 +62,13 @@ class Day19: AOC {
             let ruleTxt: String = parts[1]
             let R = parseRule(ruleTxt)
             rules[ruleId] = R
+        }
+        
+        rules[8] = Rule.repetition(42)
+        if rules[11] != nil {
+            print("eleven!")
+            print(rules[11]!)
+            rules[11] = Rule.fuck(42, 31)
         }
         
         return (rules, messages)
@@ -111,6 +120,17 @@ class Day19: AOC {
                 return ""
             }
             return makeRegexStr(subr, rules: rules)
+        case .repetition(let id):
+            let subr = rules[id]!
+            return makeRegexStr(subr, rules: rules) + "+"
+        case .fuck(let left, let right):
+            let leftEx: String = makeRegexStr(rules[left]!, rules: rules)
+            let rightEx: String = makeRegexStr(rules[right]!, rules: rules)
+            var opts: [String] = []
+            for i in 1 ... 10 {
+                opts.append(String(repeating: leftEx, count: i) + String(repeating: rightEx, count: i))
+            }
+            return "(" + opts.joined(separator: "|") + ")"
         }
     }
     
@@ -122,45 +142,110 @@ class Day19: AOC {
     
     func test() -> Void {
         let example = """
-0: 4 1 5
-1: 2 3 | 3 2
-2: 4 4 | 5 5
-3: 4 5 | 5 4
-4: "a"
-5: "b"
+42: 9 14 | 10 1
+9: 14 27 | 1 26
+10: 23 14 | 28 1
+1: "a"
+11: 42 31
+5: 1 14 | 15 1
+19: 14 1 | 14 14
+12: 24 14 | 19 1
+16: 15 1 | 14 14
+31: 14 17 | 1 13
+6: 14 14 | 1 14
+2: 1 24 | 14 4
+0: 8 11
+13: 14 3 | 1 12
+15: 1 | 14
+17: 14 2 | 1 7
+23: 25 1 | 22 14
+28: 16 1
+4: 1 1
+20: 14 14 | 1 15
+3: 5 14 | 16 1
+27: 1 6 | 14 18
+14: "b"
+21: 14 1 | 1 14
+25: 1 1 | 1 14
+22: 14 14
+8: 42
+26: 14 22 | 1 20
+18: 15 15
+7: 14 5 | 1 21
+24: 14 1
 
-ababbb
-bababa
-abbbab
-aaabbb
-aaaabbb
+abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa
+bbabbbbaabaabba
+babbbbaabbbbbabbbbbbaabaaabaaa
+aaabbbbbbaaaabaababaabababbabaaabbababababaaa
+bbbbbbbaaaabbbbaaabbabaaa
+bbbababbbbaaaaaaaabbababaaababaabab
+ababaaaaaabaaab
+ababaaaaabbbaba
+baabbaaaabbaaaababbaababb
+abbbbabbbbaaaababbbbbbaaaababb
+aaaaabbaabaaaaababaa
+aaaabbaaaabbaaa
+aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
+babaaabbbaaabaababbaabababaaab
+aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba
 """
         let (rules, messages) = Day19.parse(example)
         let regex = makeRegex(ruleid: 0, rules: rules)
         print(regex)
-        assert(true == regex.matches("ababbb"))
-        assert(true == regex.matches("abbbab"))
-        assert(false == regex.matches("bababa"))
-        assert(false == regex.matches("aaabbb"))
-        assert(false == regex.matches("aaaabbb"))
+        assert(true == regex.matches("bbabbbbaabaabba"))
+        assert(true == regex.matches("babbbbaabbbbbabbbbbbaabaaabaaa"))
+        assert(true == regex.matches("aaabbbbbbaaaabaababaabababbabaaabbababababaaa"))
+        assert(true == regex.matches("bbbbbbbaaaabbbbaaabbabaaa"))
+        assert(true == regex.matches("bbbababbbbaaaaaaaabbababaaababaabab"))
+        assert(true == regex.matches("ababaaaaaabaaab"))
+        assert(true == regex.matches("ababaaaaabbbaba"))
+        assert(true == regex.matches("baabbaaaabbaaaababbaababb"))
+        assert(true == regex.matches("abbbbabbbbaaaababbbbbbaaaababb"))
+        assert(true == regex.matches("aaaaabbaabaaaaababaa"))
+        assert(true == regex.matches("aaaabbaabbaaaaaaabbbabbbaaabbaabaaa"))
+        assert(true == regex.matches("aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"))
+        
+        assert(false == regex.matches("abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa"))
+        assert(false == regex.matches("aaaabbaaaabbaaa"))
+        assert(false == regex.matches("babaaabbbaaabaababbaabababaaab"))
+        
+        let matches = messages.map{ regex.matches($0) ? 1 : 0 }.reduce(0, +)
+        assert(12 == matches)
+
         print("tests OK")
     }
     
+//    func isMatch(msg: String, rule: Rule, rules: Dictionary<Int, Rule>) -> (Bool, String) {
+//        switch rule {
+//        case .literal(let lit):
+//            return (msg == lit, lit)
+//        case .any(let subRules):
+//            for R in subRules {
+//                if isMatch(msg: msg, rule: R, rules: rules) {
+//                    return true
+//                }
+//            }
+//            return false
+//        case .sub(let subId):
+//            return isMatch(msg: msg, rule: rules[subId]!, rules: rules)
+//        case .series(let series):
+//
+//        default:
+//            <#code#>
+//        }
+//    }
+    
 
     func part1() -> Void {
-        let (rules, messages) = Day19.parse(day19puzzleinput)
-        let regex = makeRegex(ruleid: 0, rules: rules)
-        var matches = 0
-        for M in messages {
-            let range = NSRange(location: 0, length: M.utf8.count)
-            if regex.firstMatch(in: M, options: [], range: range) != nil {
-                matches += 1
-            }
-        }
-        print("Part 1: \(matches)")
-        assert(matches == 299)
     }
     
     func part2() -> Void {
+        let (rules, messages) = Day19.parse(day19puzzleinput)
+        let regex = makeRegex(ruleid: 0, rules: rules)
+        print(regex)
+        let matches = messages.map{ regex.matches($0) ? 1 : 0 }.reduce(0, +)
+        print("Part 1: \(matches)")
+        assert(matches != 424)
     }
 }
