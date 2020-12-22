@@ -705,8 +705,8 @@
             filePath = "aoc2020/day22.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "war(players:)"
             landmarkType = "7">
          </BreakpointContent>
